@@ -11,6 +11,8 @@ import SiteHeader from './components/siteHeader';
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AddMovieReviewPage from './pages/addMovieReviewPage'
+import TvContextProvider from "./contexts/tvContext";
+import TvHomePage from "./pages/tvHomePage";
 
 
 const queryClient = new QueryClient({
@@ -29,15 +31,18 @@ const App = () => {
       <BrowserRouter>
         <SiteHeader />
         <MoviesContextProvider>
-          <Routes>
-            <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
-            <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
-            <Route path="/movies/upcoming" element={<UpcomingPage />} />
-            <Route path="/movies/:id" element={<MoviePage />} />
-            <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
-            <Route path="/" element={<HomePage />} />
-            <Route path="*" element={ <Navigate to="/" /> } />
-          </Routes>
+          <TvContextProvider>
+            <Routes>
+              <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
+              <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+              <Route path="/movies/upcoming" element={<UpcomingPage />} />
+              <Route path="/movies/:id" element={<MoviePage />} />
+              <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
+              <Route path="/tv" element={ <TvHomePage /> } />
+              <Route path="/" element={<HomePage />} />
+              <Route path="*" element={ <Navigate to="/" /> } />
+            </Routes>
+          </TvContextProvider>
         </MoviesContextProvider>
       </BrowserRouter>
     <ReactQueryDevtools initialIsOpen={false} />
