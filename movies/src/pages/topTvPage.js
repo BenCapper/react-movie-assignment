@@ -2,11 +2,11 @@ import React from "react";
 import { getTopTv } from "../api/tmdb-api";
 import TvPageTemplate from '../components/templateTvListPage'
 import Spinner from '../components/spinner';
-import PlaylistAddIcon from '../components/cardIcons/addToMustWatch';
+import PlaylistAddIcon from '../components/cardIcons/addToMustWatchTv';
 import { useQuery } from 'react-query';
 
-const TvUpcomingPage = (props) => {
-  const {  data, error, isLoading, isError }  = useQuery('upcomingTv', getTopTv)
+const TvTopPage = (props) => {
+  const {  data, error, isLoading, isError }  = useQuery('topTv', getTopTv)
 
   if (isLoading) {
     return <Spinner />
@@ -24,12 +24,12 @@ const TvUpcomingPage = (props) => {
 
   return (
     <TvPageTemplate
-      title="Upcoming TV"
+      title="Top Rated"
       tv={tv}
       action={(tv) => {
-        return <PlaylistAddIcon movie={tv} />
+        return <PlaylistAddIcon tv={tv} />
       }}
     />
 );
 };
-export default TvUpcomingPage;
+export default TvTopPage;
