@@ -5,7 +5,7 @@ import { useQueries } from "react-query";
 import { getTv } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
 import RemoveFromFavoriteTv from "../components/cardIcons/removeFromFavoriteTv";
-import WriteReview from "../components/cardIcons/writeReview"
+import WriteReviewTv from "../components/cardIcons/writeReviewTv"
 
 const TvFavoritePage = () => {
   const {favorites: tvIds } = useContext(TvContext);
@@ -40,7 +40,7 @@ const TvFavoritePage = () => {
         return (
           <>
             <RemoveFromFavoriteTv tv={tv} />
-            <WriteReview movie={tv} />
+            <WriteReviewTv tv={tv} />
           </>
         );
       }}
