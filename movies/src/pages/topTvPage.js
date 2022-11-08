@@ -24,7 +24,7 @@ const TvTopPage = (props) => {
 
   return (
     <TvPageTemplate
-      title="Top Rated"
+      name="Top Rated TV"
       tv={tv}
       action={(tv) => {
         return <PlaylistAddIcon tv={tv} />
