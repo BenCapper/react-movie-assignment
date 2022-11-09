@@ -23,7 +23,10 @@ const chip = { margin: 0.5 };
 
 const MovieDetails = ({ movie }) => { 
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+  
+  const chipHandler = ( homepage ) => {
+      console.log(homepage)
+  }
   return (
     <>
       <Typography variant="h5" component="h3">
@@ -55,7 +58,7 @@ const MovieDetails = ({ movie }) => {
         />
         <Chip
           icon={<StarRate />}
-          label={`${movie.vote_average} (${movie.vote_count}`}
+          label={`${movie.vote_average} (${movie.vote_count})`}
         />
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
@@ -69,6 +72,19 @@ const MovieDetails = ({ movie }) => {
         {movie.production_countries.map((countries) => (
           <li key={countries.name}>
             <Chip label={countries.name} sx={{...chip}} />
+          </li>
+        ))}
+      </Paper>
+      <Paper 
+        component="ul" 
+        sx={{...root}}
+      >
+        <li>
+          <Chip label="Production Companies" sx={{...chip}} color="primary" />
+        </li>
+        {movie.production_companies.map((company) => (
+          <li key={company.name}>
+            <Chip label={company.name} sx={{...chip}} onClick={() => chipHandler(company)} />
           </li>
         ))}
       </Paper>
