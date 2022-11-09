@@ -91,9 +91,9 @@ export const getUpcoming = ( page ) => {
   });
 };
 
-export const getTopTv = () => {
+export const getTopTv = ( page ) => {
   return fetch(
-    `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
+    `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=${page}`
   ).then((response) => {
     if (!response.ok) {
       throw new Error(response.json().message);

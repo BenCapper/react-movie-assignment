@@ -1,12 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { getTopTv } from "../api/tmdb-api";
 import TvPageTemplate from '../components/templateTvListPage'
 import Spinner from '../components/spinner';
 import PlaylistAddIcon from '../components/cardIcons/addToMustWatchTv';
 import { useQuery } from 'react-query';
+import { Stack } from "@mui/material";
+import { Pagination } from "@mui/material";
+
 
 const TvTopPage = (props) => {
-  const {  data, error, isLoading, isError }  = useQuery('topTv', getTopTv)
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const {
+    isLoading,
+    isError,
+    error,
+    data,
+  } = useQuery({
+    queryKey: ['topTv', pageNumber],
+    queryFn: () => getTopTv(pageNumber),
+    keepPreviousData : true
+  })
+
+  const handleChange = (event, value) => {
+    setPageNumber(value);
+  }
 
   if (isLoading) {
     return <Spinner />
@@ -23,6 +41,7 @@ const TvTopPage = (props) => {
   localStorage.setItem('mustWatchTv', JSON.stringify(mustWatch))
 
   return (
+    <>
     <TvPageTemplate
       name="Top Rated TV"
       tv={tv}
@@ -30,6 +49,10 @@ const TvTopPage = (props) => {
         return <PlaylistAddIcon tv={tv} />
       }}
     />
+    <Stack alignItems="center">
+      <Pagination color='primary' count={10} page={pageNumber} onChange={handleChange} />
+    </Stack>
+    </>
 );
 };
 export default TvTopPage;
