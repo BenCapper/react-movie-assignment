@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { getUpcoming } from "../api/tmdb-api";
-import PageTemplate from '../components/templateMovieListPage'
+import { getTopTv } from "../api/tmdb-api";
+import TvPageTemplate from '../components/templateTvListPage'
 import Spinner from '../components/spinner';
-import PlaylistAddIcon from '../components/cardIcons/addToMustWatch';
+import PlaylistAddIcon from '../components/cardIcons/addToMustWatchTv';
 import { useQuery } from 'react-query';
 import { Stack } from "@mui/material";
 import { Pagination } from "@mui/material";
 
-const UpcomingPage = (props) => {
+
+const TvTopPage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
 
   const {
@@ -16,14 +17,15 @@ const UpcomingPage = (props) => {
     error,
     data,
   } = useQuery({
-    queryKey: ['upcoming', pageNumber],
-    queryFn: () => getUpcoming(pageNumber),
+    queryKey: ['topTv', pageNumber],
+    queryFn: () => getTopTv(pageNumber),
     keepPreviousData : true
   })
 
   const handleChange = (event, value) => {
     setPageNumber(value);
-  } 
+  }
+
   if (isLoading) {
     return <Spinner />
   }
@@ -31,20 +33,20 @@ const UpcomingPage = (props) => {
   if (isError) {
     return <h1>{error.message}</h1>
   }  
-  const movies = data.results;
-  console.log(movies)
+  const tv = data.results;
+  console.log(tv)
 
   // Redundant, but necessary to avoid app crashing.
-  const mustWatch = movies.filter(m => m.mustWatch)
-  localStorage.setItem('mustWatch', JSON.stringify(mustWatch))
+  const mustWatch = tv.filter(m => m.mustWatch)
+  localStorage.setItem('mustWatchTv', JSON.stringify(mustWatch))
 
   return (
     <>
-    <PageTemplate
-      title="Upcoming Movies"
-      movies={movies}
-      action={(movie) => {
-        return <PlaylistAddIcon movie={movie} />
+    <TvPageTemplate
+      name="Top Rated TV"
+      tv={tv}
+      action={(tv) => {
+        return <PlaylistAddIcon tv={tv} />
       }}
     />
     <Stack alignItems="center">
@@ -53,4 +55,4 @@ const UpcomingPage = (props) => {
     </>
 );
 };
-export default UpcomingPage;
+export default TvTopPage;

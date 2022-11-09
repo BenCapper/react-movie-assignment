@@ -1,13 +1,31 @@
-import React from "react";
+import React, {useState} from "react";
 import { getMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
+import { Stack } from "@mui/material";
+import { Pagination } from "@mui/material";
+
+
 
 const HomePage = (props) => {
+  const [pageNumber, setPageNumber] = useState(1);
 
-  const {  data, error, isLoading, isError }  = useQuery('discover', getMovies)
+  const {
+    isLoading,
+    isError,
+    error,
+    data,
+  } = useQuery({
+    queryKey: ['movies', pageNumber],
+    queryFn: () => getMovies(pageNumber),
+    keepPreviousData : true
+  })
+
+  const handleChange = (event, value) => {
+    setPageNumber(value);
+  }
 
   if (isLoading) {
     return <Spinner />
@@ -23,6 +41,7 @@ const HomePage = (props) => {
   localStorage.setItem('favorites', JSON.stringify(favorites))
 
   return (
+    <>
     <PageTemplate
       title="Discover Movies"
       movies={movies}
@@ -30,6 +49,10 @@ const HomePage = (props) => {
         return <AddToFavoritesIcon movie={movie} />
       }}
     />
+    <Stack alignItems="center">
+      <Pagination color='primary' count={10} page={pageNumber} onChange={handleChange} />
+    </Stack>
+    </>
 );
 };
 export default HomePage;

@@ -1,5 +1,5 @@
 import React from "react";
-import { getGenres } from "../../api/tmdb-api";
+import { getTvGenres } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner';
 import Card from "@mui/material/Card";
@@ -23,7 +23,7 @@ const formControl =
 
 export default function FilterMoviesCard(props) {
 
-  const { data, error, isLoading, isError } = useQuery("genres", getGenres);
+  const { data, error, isLoading, isError } = useQuery("genres", getTvGenres);
 
   if (isLoading) {
     return <Spinner />;

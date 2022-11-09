@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { getUpcoming } from "../api/tmdb-api";
-import PageTemplate from '../components/templateMovieListPage'
-import Spinner from '../components/spinner';
-import PlaylistAddIcon from '../components/cardIcons/addToMustWatch';
+import { getAllTv } from "../api/tmdb-api";
+import TvListPageTemplate from '../components/templateTvListPage';
 import { useQuery } from 'react-query';
+import Spinner from '../components/spinner';
+import AddToFavoritesIcon from '../components/cardIcons/addToFavoritesTv';
 import { Stack } from "@mui/material";
 import { Pagination } from "@mui/material";
 
-const UpcomingPage = (props) => {
+const TvHomePage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
 
   const {
@@ -16,14 +16,15 @@ const UpcomingPage = (props) => {
     error,
     data,
   } = useQuery({
-    queryKey: ['upcoming', pageNumber],
-    queryFn: () => getUpcoming(pageNumber),
+    queryKey: ['discoverTv', pageNumber],
+    queryFn: () => getAllTv(pageNumber),
     keepPreviousData : true
   })
 
   const handleChange = (event, value) => {
     setPageNumber(value);
-  } 
+  }
+
   if (isLoading) {
     return <Spinner />
   }
@@ -31,20 +32,20 @@ const UpcomingPage = (props) => {
   if (isError) {
     return <h1>{error.message}</h1>
   }  
-  const movies = data.results;
-  console.log(movies)
+  const allTv = data.results;
+  console.log(allTv)
 
   // Redundant, but necessary to avoid app crashing.
-  const mustWatch = movies.filter(m => m.mustWatch)
-  localStorage.setItem('mustWatch', JSON.stringify(mustWatch))
+  const favorites = allTv.filter(m => m.favorite)
+  localStorage.setItem('favoritesTv', JSON.stringify(favorites))
 
   return (
     <>
-    <PageTemplate
-      title="Upcoming Movies"
-      movies={movies}
-      action={(movie) => {
-        return <PlaylistAddIcon movie={movie} />
+    <TvListPageTemplate
+      name="Discover TV"
+      tv={allTv}
+      action={(tv) => {
+        return <AddToFavoritesIcon tv={tv} />
       }}
     />
     <Stack alignItems="center">
@@ -53,4 +54,4 @@ const UpcomingPage = (props) => {
     </>
 );
 };
-export default UpcomingPage;
+export default TvHomePage;
