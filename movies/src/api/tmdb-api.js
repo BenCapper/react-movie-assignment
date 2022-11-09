@@ -77,9 +77,9 @@ export const getTv = (args) => {
  });
 };
 
-export const getUpcoming = () => {
+export const getUpcoming = ( page ) => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=${page}`
   ).then((response) => {
     if (!response.ok) {
       throw new Error(response.json().message);

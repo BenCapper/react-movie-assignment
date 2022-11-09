@@ -5,7 +5,6 @@ import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 import { Stack } from "@mui/material";
-import { Typography } from "@mui/material";
 import { Pagination } from "@mui/material";
 
 
@@ -19,7 +18,7 @@ const HomePage = (props) => {
     error,
     data,
   } = useQuery({
-    queryKey: ['projects', pageNumber],
+    queryKey: ['movies', pageNumber],
     queryFn: () => getMovies(pageNumber),
     keepPreviousData : true
   })
