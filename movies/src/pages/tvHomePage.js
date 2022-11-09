@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { getAllTv } from "../api/tmdb-api";
 import TvListPageTemplate from '../components/templateTvListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
-import AddToFavoritesIcon from '../components/cardIcons/addToFavoritesTv'
+import AddToFavoritesIcon from '../components/cardIcons/addToFavoritesTv';
+import { Stack } from "@mui/material";
+import { Pagination } from "@mui/material";
 
 const TvHomePage = (props) => {
+  const [pageNumber, setPageNumber] = useState(1);
 
-  const {  data, error, isLoading, isError }  = useQuery('discoverTv', getAllTv)
+  const {
+    isLoading,
+    isError,
+    error,
+    data,
+  } = useQuery({
+    queryKey: ['discoverTv', pageNumber],
+    queryFn: () => getAllTv(pageNumber),
+    keepPreviousData : true
+  })
+
+  const handleChange = (event, value) => {
+    setPageNumber(value);
+  }
 
   if (isLoading) {
     return <Spinner />
@@ -24,6 +40,7 @@ const TvHomePage = (props) => {
   localStorage.setItem('favoritesTv', JSON.stringify(favorites))
 
   return (
+    <>
     <TvListPageTemplate
       name="Discover TV"
       tv={allTv}
@@ -31,6 +48,10 @@ const TvHomePage = (props) => {
         return <AddToFavoritesIcon tv={tv} />
       }}
     />
+    <Stack alignItems="center">
+      <Pagination color='primary' count={10} page={pageNumber} onChange={handleChange} />
+    </Stack>
+    </>
 );
 };
 export default TvHomePage;
