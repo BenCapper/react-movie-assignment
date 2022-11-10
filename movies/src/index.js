@@ -35,7 +35,6 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <SiteHeader />
         <MoviesContextProvider>
           <TvContextProvider>
             <Routes>
@@ -51,8 +50,8 @@ const App = () => {
               <Route path="/tv/favorites" element={ <TvFavoritePage /> } />
               <Route path="/tv/top" element={<TvTopPage />} />
               <Route path="/mustwatch" element={<MustWatchPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/movies" element={<HomePage />} />
               <Route path="*" element={ <Navigate to="/" /> } />
             </Routes>
           </TvContextProvider>

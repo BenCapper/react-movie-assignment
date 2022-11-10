@@ -5,7 +5,8 @@ import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
 import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
-import WriteReview from "../components/cardIcons/writeReview"
+import WriteReview from "../components/cardIcons/writeReview";
+import SiteHeader from "../components/siteHeader";
 
 const FavoriteMoviesPage = () => {
   const {favorites: movieIds } = useContext(MoviesContext);
@@ -33,6 +34,8 @@ const FavoriteMoviesPage = () => {
 
 
   return (
+    <>
+    <SiteHeader/>
     <PageTemplate
       title="Favorite Movies"
       movies={movies}
@@ -45,6 +48,7 @@ const FavoriteMoviesPage = () => {
         );
       }}
     />
+    </>
   );
 };
 

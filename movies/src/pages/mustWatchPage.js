@@ -5,6 +5,7 @@ import { useQueries } from "react-query";
 import { getTv } from "../api/tmdb-api";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
+import SiteHeader from "../components/siteHeader";
 
 
 const MustWatchPage = () => {
@@ -55,6 +56,7 @@ const MustWatchPage = () => {
 
   return (
     <>
+    <SiteHeader/>
     <TvPageTemplate
       name="Must Watch TV"
       tv={tv}

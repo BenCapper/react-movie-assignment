@@ -6,6 +6,7 @@ import PlaylistAddIcon from '../components/cardIcons/addToMustWatch';
 import { useQuery } from 'react-query';
 import { Stack } from "@mui/material";
 import { Pagination } from "@mui/material";
+import SiteHeader from "../components/siteHeader";
 
 const UpcomingPage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -40,6 +41,7 @@ const UpcomingPage = (props) => {
 
   return (
     <>
+    <SiteHeader/>
     <PageTemplate
       title="Upcoming Movies"
       movies={movies}

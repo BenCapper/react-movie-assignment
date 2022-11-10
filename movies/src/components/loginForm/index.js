@@ -82,7 +82,7 @@ const LoginForm = () => {
       const user = userCredential.user;
       console.log(user, values.email, values.password)
       setUser(user)
-      navigate("/")
+      navigate("/movies")
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -98,7 +98,7 @@ const LoginForm = () => {
         const user = userCredential.user;
         console.log(values.email, values.password)
         setUser(user);
-        navigate("/")
+        navigate("/movies")
       })
       .catch((error) => {
         const errorCode = error.code;

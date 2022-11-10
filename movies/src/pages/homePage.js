@@ -6,6 +6,7 @@ import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 import { Stack } from "@mui/material";
 import { Pagination } from "@mui/material";
+import SiteHeader from "../components/siteHeader";
 
 
 
@@ -42,6 +43,7 @@ const HomePage = (props) => {
 
   return (
     <>
+    <SiteHeader/>
     <PageTemplate
       title="Discover Movies"
       movies={movies}

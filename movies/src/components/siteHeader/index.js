@@ -11,27 +11,41 @@ import { useNavigate } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { getAuth, signOut } from "firebase/auth";
+
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = ({ history }) => {
+  const [user, setUser] = useState({});
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
+  const auth = getAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const navigate = useNavigate();
+  const sign = () => {
+    signOut(auth).then(() => {
+        console.log(user)
+        setUser()
+      }).catch((error) => {
+        console.log(error)
+      });
+  };
 
   const menuOptions = [
-    { label: "Home", path: "/" },
+    { label: "Home", path: "/movies" },
     { label: "Favorite Movies", path: "/movies/favorites" },
     { label: "Upcoming Movies", path: "/movies/upcoming" },
     { label: "Favorite TV", path: "/tv/favorites" },
     { label: "Top Rated TV", path: "/tv/top" },
     { label: "Discover Tv", path: "/tv" },
-    { label: "Must Watch", path: "/mustwatch" },
+    { label: "Must Watch", path: "/mustwatch" }
   ];
+
+
+
 
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true });
@@ -43,7 +57,7 @@ const SiteHeader = ({ history }) => {
 
   return (
     <>
-      <AppBar position="fixed" color="secondary">
+      <AppBar position="fixed" color="primary">
         <Toolbar>
           <Typography variant="h4" sx={{ flexGrow: 1 }}>
             TMDB Client

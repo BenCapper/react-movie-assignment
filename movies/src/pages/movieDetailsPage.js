@@ -5,6 +5,7 @@ import PageTemplate from "../components/templateMoviePage";
 import { getMovie } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
+import SiteHeader from "../components/siteHeader";
 
 const MoviePage = (props) => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ const MoviePage = (props) => {
 
   return (
     <>
+    <SiteHeader/>
       {movie ? (
         <>
           <PageTemplate movie={movie}>

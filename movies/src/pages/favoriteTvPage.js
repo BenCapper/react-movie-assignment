@@ -5,7 +5,9 @@ import { useQueries } from "react-query";
 import { getTv } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
 import RemoveFromFavoriteTv from "../components/cardIcons/removeFromFavoriteTv";
-import WriteReviewTv from "../components/cardIcons/writeReviewTv"
+import WriteReviewTv from "../components/cardIcons/writeReviewTv";
+import SiteHeader from "../components/siteHeader";
+
 
 const TvFavoritePage = () => {
   const {favorites: tvIds } = useContext(TvContext);
@@ -33,6 +35,8 @@ const TvFavoritePage = () => {
 
 
   return (
+    <>
+    <SiteHeader/>
     <TvPageTemplate
       name="Favorite TV"
       tv={tv}
@@ -45,6 +49,7 @@ const TvFavoritePage = () => {
         );
       }}
     />
+    </>
   );
 };
 
