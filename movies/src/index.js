@@ -7,7 +7,6 @@ import UpcomingPage from "./pages/upcomingMoviesPage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
 import MovieReviewPage from "./pages/movieReviewPage";
-import SiteHeader from './components/siteHeader';
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AddMovieReviewPage from './pages/addMovieReviewPage'
@@ -18,7 +17,8 @@ import TvReviewsPage from "./pages/tvReviewsPage";
 import TvFavoritePage from "./pages/favoriteTvPage";
 import AddTvReviewPage from "./pages/addTvReviewPage";
 import TvTopPage from "./pages/topTvPage";
-import MustWatchPage from "./pages/mustWatchPage";
+import MustWatchTvPage from "./pages/mustWatchTvPage";
+import MustWatchMoviePage from "./pages/mustWatchMoviesPage";
 import LoginPage from "./pages/loginPage";
 
 const queryClient = new QueryClient({
@@ -41,7 +41,7 @@ const App = () => {
               <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
               <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
               <Route path="/movies/upcoming" element={<UpcomingPage />} />
-              <Route path="/movies/mustwatch" element={<MustWatchPage />} />
+              <Route path="/movies/mustwatch" element={<MustWatchMoviePage />} />
               <Route path="/movies/:id" element={<MoviePage />} />
               <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
               <Route path="/tv" element={ <TvHomePage /> } />
@@ -50,7 +50,7 @@ const App = () => {
               <Route path="/tv/reviews/form" element={ <AddTvReviewPage /> } />
               <Route path="/tv/favorites" element={ <TvFavoritePage /> } />
               <Route path="/tv/top" element={<TvTopPage />} />
-              <Route path="/tv/mustwatch" element={<MustWatchPage />} />
+              <Route path="/tv/mustwatch" element={<MustWatchTvPage />} />
               <Route path="/" element={<LoginPage />} />
               <Route path="/movies" element={<HomePage />} />
               <Route path="*" element={ <Navigate to="/" /> } />
