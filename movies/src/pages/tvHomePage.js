@@ -6,7 +6,7 @@ import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavoritesTv';
 import { Stack } from "@mui/material";
 import { Pagination } from "@mui/material";
-import SiteHeader from "../components/siteHeader";
+import SiteHeaderTv from "../components/siteHeaderTv";
 
 const TvHomePage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -42,7 +42,7 @@ const TvHomePage = (props) => {
 
   return (
     <>
-    <SiteHeader/>
+    <SiteHeaderTv/>
     <TvListPageTemplate
       name="Discover TV"
       tv={allTv}

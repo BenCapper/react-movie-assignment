@@ -5,7 +5,7 @@ import { useQueries } from "react-query";
 import { getTv } from "../api/tmdb-api";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
-import SiteHeader from "../components/siteHeader";
+import SiteHeader from "../components/siteHeaderTv";
 
 
 const MustWatchPage = () => {

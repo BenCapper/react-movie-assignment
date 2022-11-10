@@ -16,7 +16,7 @@ import { getAuth, signOut } from "firebase/auth";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
-const SiteHeader = ({ history }) => {
+const SiteHeaderTv = ({ history }) => {
   const [user, setUser] = useState({});
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -35,12 +35,12 @@ const SiteHeader = ({ history }) => {
   };
 
   const menuOptions = [
-    { label: "Home", path: "/movies" },
-    { label: "Upcoming Movies", path: "/movies/upcoming" },
-    { label: "Favorite Movies", path: "/movies/favorites" },
-    { label: "Must Watch", path: "/movies/mustwatch" },
-    { label: "Tv", path: "/tv" },
-    { label: "Log Out", path: "/login", function: sign}
+    { label: "Discover Tv", path: "/tv" },
+    { label: "Top Rated TV", path: "/tv/top" },
+    { label: "Favorite TV", path: "/tv/favorites" },
+    { label: "Must Watch", path: "/tv/mustwatch" },
+    { label: "Movies", path: "/movies" },
+    { label: "Log Out", path: "/login", function: sign }
   ];
 
 
@@ -120,4 +120,4 @@ const SiteHeader = ({ history }) => {
   );
 };
 
-export default SiteHeader;
+export default SiteHeaderTv;

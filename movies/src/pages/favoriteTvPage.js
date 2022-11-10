@@ -6,7 +6,7 @@ import { getTv } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
 import RemoveFromFavoriteTv from "../components/cardIcons/removeFromFavoriteTv";
 import WriteReviewTv from "../components/cardIcons/writeReviewTv";
-import SiteHeader from "../components/siteHeader";
+import SiteHeaderTv from "../components/siteHeaderTv";
 
 
 const TvFavoritePage = () => {
@@ -36,7 +36,7 @@ const TvFavoritePage = () => {
 
   return (
     <>
-    <SiteHeader/>
+    <SiteHeaderTv/>
     <TvPageTemplate
       name="Favorite TV"
       tv={tv}

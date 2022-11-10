@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getTv } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
-import SiteHeader from "../components/siteHeader";
+import SiteHeaderTv from "../components/siteHeaderTv";
 
 
 const WriteReviewPage = (props) => {
@@ -26,7 +26,7 @@ const WriteReviewPage = (props) => {
   }
   return (
     <>
-    <SiteHeader/>
+    <SiteHeaderTv/>
     <TvPageTemplate tv={tv}>
       <TvReviewForm tv={tv} />
     </TvPageTemplate>

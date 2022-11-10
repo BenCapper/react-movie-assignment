@@ -6,7 +6,7 @@ import PlaylistAddIcon from '../components/cardIcons/addToMustWatchTv';
 import { useQuery } from 'react-query';
 import { Stack } from "@mui/material";
 import { Pagination } from "@mui/material";
-import SiteHeader from "../components/siteHeader";
+import SiteHeaderTv from "../components/siteHeaderTv";
 
 
 const TvTopPage = (props) => {
@@ -43,7 +43,7 @@ const TvTopPage = (props) => {
 
   return (
     <>
-    <SiteHeader/>
+    <SiteHeaderTv/>
     <TvPageTemplate
       name="Top Rated TV"
       tv={tv}

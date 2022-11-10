@@ -5,7 +5,7 @@ import TvPageTemplate from "../components/templateTvPage";
 import { getTv } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
-import SiteHeader from "../components/siteHeader";
+import SiteHeaderTv from "../components/siteHeaderTv";
 
 const TvDetailsPage = (props) => {
   const { id } = useParams();
@@ -24,7 +24,7 @@ const TvDetailsPage = (props) => {
 
   return (
     <>
-    <SiteHeader/>
+    <SiteHeaderTv/>
       {tv ? (
         <>
           <TvPageTemplate tv={tv}>
