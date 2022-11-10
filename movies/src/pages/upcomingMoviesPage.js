@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getUpcoming } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage'
 import Spinner from '../components/spinner';
@@ -7,9 +7,21 @@ import { useQuery } from 'react-query';
 import { Stack } from "@mui/material";
 import { Pagination } from "@mui/material";
 import SiteHeader from "../components/siteHeader";
+import { useNavigate } from "react-router-dom";
 
 const UpcomingPage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
+  const [user, setUser] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("user");
+    if (loggedIn) {
+      const foundUser = JSON.parse(loggedIn);
+      setUser(foundUser);
+    }
+    else navigate("/login");
+  }, []);
 
   const {
     isLoading,

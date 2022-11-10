@@ -82,6 +82,7 @@ const LoginForm = () => {
       const user = userCredential.user;
       console.log(user, values.email, values.password)
       setUser(user)
+      localStorage.setItem("user", JSON.stringify(user))
       navigate("/movies")
     })
     .catch((error) => {
@@ -98,6 +99,7 @@ const LoginForm = () => {
         const user = userCredential.user;
         console.log(values.email, values.password)
         setUser(user);
+        localStorage.setItem("user", JSON.stringify(user))
         navigate("/movies")
       })
       .catch((error) => {
@@ -107,14 +109,6 @@ const LoginForm = () => {
       });
     };
 
-  const sign = () => {
-      signOut(auth).then(() => {
-          console.log(auth)
-          setUser()
-        }).catch((error) => {
-          console.log(error)
-        });
-    };
 
   const errorCheck = (errorCode) => {
     if (errorCode === "auth/email-already-in-use"){
@@ -191,5 +185,6 @@ const LoginForm = () => {
     </>
   );
 };
+
 
 export default LoginForm;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -24,10 +24,18 @@ const SiteHeader = ({ history }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("user");
+    if (loggedIn) {
+      const foundUser = JSON.parse(loggedIn);
+      setUser(foundUser);
+    }
+  }, []);
+
   const navigate = useNavigate();
   const sign = () => {
     signOut(auth).then(() => {
-        console.log(user)
+        localStorage.clear()
         setUser()
       }).catch((error) => {
         console.log(error)
@@ -40,13 +48,14 @@ const SiteHeader = ({ history }) => {
     { label: "Favorite Movies", path: "/movies/favorites" },
     { label: "Must Watch", path: "/movies/mustwatch" },
     { label: "Tv", path: "/tv" },
-    { label: "Log Out", path: "/login", function: sign}
+    { label: "Log Out", path: "/login"}
   ];
 
 
 
 
   const handleMenuSelect = (pageURL) => {
+    if (pageURL === "/login") sign();
     navigate(pageURL, { replace: true });
   };
 
@@ -62,7 +71,10 @@ const SiteHeader = ({ history }) => {
             TMDB Client
           </Typography>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            All you ever wanted to know about Media!
+            All you ever wanted to know about Movies!
+          </Typography>
+          <Typography variant="h6" sx={{ flexGrow: 1, mr: 1 }}>
+            {user?.email}
           </Typography>
             {isMobile ? (
               <>

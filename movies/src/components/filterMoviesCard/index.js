@@ -54,13 +54,14 @@ export default function FilterMoviesCard(props) {
     <Card 
       sx={{
         maxWidth: 345,
-        backgroundColor: "rgb(204, 204, 0)"
+        backgroundColor: "dodgerblue",
+        color: "white"
       }} 
       variant="outlined">
       <CardContent>
         <Typography variant="h5" component="h1">
           <SearchIcon fontSize="large" />
-          Filter
+          Filter Movies
         </Typography>
         <TextField
           sx={{...formControl}}
@@ -98,7 +99,7 @@ export default function FilterMoviesCard(props) {
       <CardContent>
         <Typography variant="h5" component="h1">
           <SearchIcon fontSize="large" />
-          Filter
+          Filter Movies
           <br />
         </Typography>
       </CardContent>

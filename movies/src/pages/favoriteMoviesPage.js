@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
@@ -7,9 +7,22 @@ import Spinner from '../components/spinner';
 import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
 import WriteReview from "../components/cardIcons/writeReview";
 import SiteHeader from "../components/siteHeader";
+import { useNavigate } from "react-router-dom";
+
 
 const FavoriteMoviesPage = () => {
   const {favorites: movieIds } = useContext(MoviesContext);
+  const [user, setUser] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("user");
+    if (loggedIn) {
+      const foundUser = JSON.parse(loggedIn);
+      setUser(foundUser);
+    }
+    else navigate("/login");
+  }, []);
 
   // Create an array of queries and run in parallel.
   const favoriteMovieQueries = useQueries(

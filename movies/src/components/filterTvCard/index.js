@@ -60,7 +60,7 @@ export default function FilterMoviesCard(props) {
       <CardContent>
         <Typography variant="h5" component="h1">
           <SearchIcon fontSize="large" />
-          Filter
+          Filter TV
         </Typography>
         <TextField
           sx={{...formControl}}
@@ -98,7 +98,7 @@ export default function FilterMoviesCard(props) {
       <CardContent>
         <Typography variant="h5" component="h1">
           <SearchIcon fontSize="large" />
-          Filter
+          Filter TV
           <br />
         </Typography>
       </CardContent>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getTopTv } from "../api/tmdb-api";
 import TvPageTemplate from '../components/templateTvListPage'
 import Spinner from '../components/spinner';
@@ -7,10 +7,22 @@ import { useQuery } from 'react-query';
 import { Stack } from "@mui/material";
 import { Pagination } from "@mui/material";
 import SiteHeaderTv from "../components/siteHeaderTv";
+import { useNavigate } from "react-router-dom";
 
 
 const TvTopPage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
+  const [user, setUser] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("user");
+    if (loggedIn) {
+      const foundUser = JSON.parse(loggedIn);
+      setUser(foundUser);
+    }
+    else navigate("/login");
+  }, []);
 
   const {
     isLoading,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getAllTv } from "../api/tmdb-api";
 import TvListPageTemplate from '../components/templateTvListPage';
 import { useQuery } from 'react-query';
@@ -7,9 +7,21 @@ import AddToFavoritesIcon from '../components/cardIcons/addToFavoritesTv';
 import { Stack } from "@mui/material";
 import { Pagination } from "@mui/material";
 import SiteHeaderTv from "../components/siteHeaderTv";
+import { useNavigate } from "react-router-dom";
 
 const TvHomePage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
+  const [user, setUser] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("user");
+    if (loggedIn) {
+      const foundUser = JSON.parse(loggedIn);
+      setUser(foundUser);
+    }
+    else navigate("/login");
+  }, []);
 
   const {
     isLoading,
