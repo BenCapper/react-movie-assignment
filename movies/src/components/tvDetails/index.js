@@ -7,6 +7,15 @@ import StarRate from "@mui/icons-material/StarRate";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import { Link } from "react-router-dom";
+import { getTvReviews } from "../../api/tmdb-api";
+import { excerpt } from "../../util";
 
 
 const root = {
@@ -64,6 +73,47 @@ const TvDetails = ({ tv }) => {
             <Chip label={countries.name} sx={{...chip}} />
           </li>
         ))}
+      </Paper>
+
+
+
+      <Paper>
+      <TableContainer component={Paper}>
+      <Table sx={{minWidth: 550}} aria-label="reviews table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Season Id</TableCell>
+            <TableCell align="center">Season</TableCell>
+            <TableCell align="right">Episodes</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {tv.seasons.map((s) => (
+            <TableRow key={s.id}>
+              <TableCell component="th" scope="row">
+                {s.id}
+              </TableCell>
+              <TableCell align="center" component="th" scope="row">
+                {s.name}
+              </TableCell>
+              <TableCell align="right" >
+              <Link
+                  to={`/tv/${tv.id}/season/${s.season_number}`}
+                  state={{
+                      season: s,
+                      tv: tv,
+                  }}
+                >
+                 ({s.episode_count}) Episodes
+                </Link>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+      
+      
       </Paper>
       <Fab
         color="secondary"

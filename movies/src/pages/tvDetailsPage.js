@@ -26,6 +26,7 @@ const TvDetailsPage = (props) => {
     ["tv", { id: id }],
     getTv
   );
+  
 
   if (isLoading) {
     return <Spinner />;
