@@ -4,48 +4,52 @@ import { TvContext } from "../contexts/tvContext";
 import { useQueries } from "react-query";
 import { getTv } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
-import RemoveFromFavoriteTv from "../components/cardIcons/removeFromFavoriteTv";
-import WriteReviewTv from "../components/cardIcons/writeReviewTv"
+import SiteHeaderTv from "../components/siteHeaderTv";
 
-const MustWatchPage = () => {
-  const {favorites: tvIds } = useContext(TvContext);
-  console.log(tvIds)
-  // Create an array of queries and run in parallel.
-  const favoriteTvQueries = useQueries(
-    tvIds.map((tvId) => {
+
+const MustWatchTvPage = () => {
+  const {mustWatch: mwIds } = useContext(TvContext);
+
+
+  const mustWatchTvQueries = useQueries(
+    mwIds.map((tvId) => {
       return {
         queryKey: ["tv", { id: tvId }],
         queryFn: getTv,
       };
     })
   );
-  // Check if any of the parallel queries is still loading.
-  const isLoading = favoriteTvQueries.find((t) => t.isLoading === true);
 
-  if (isLoading) {
+  // Check if any of the parallel queries is still loading.
+  const isLoadingTv = mustWatchTvQueries.find((t) => t.isLoading === true);
+
+  if (isLoadingTv) {
     return <Spinner />;
   }
 
-  const tv = favoriteTvQueries.map((q) => {
+  const tv = mustWatchTvQueries.map((q) => {
     q.data.genre_ids = q.data.genres.map(g => g.id)
     return q.data
   });
 
 
+
   return (
+    <>
+    <SiteHeaderTv/>
     <TvPageTemplate
-      name="Must Watch"
+      name="Must Watch TV"
       tv={tv}
       action={(tv) => {
         return (
           <>
-            <RemoveFromFavoriteTv tv={tv} />
-            <WriteReviewTv tv={tv} />
+
           </>
         );
       }}
     />
+    </>
   );
 };
 
-export default MustWatchPage;
+export default MustWatchTvPage;

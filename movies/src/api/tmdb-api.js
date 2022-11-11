@@ -77,6 +77,7 @@ export const getTv = (args) => {
  });
 };
 
+
 export const getUpcoming = ( page ) => {
   return fetch(
     `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
@@ -189,6 +190,19 @@ export const getTvReviews = (id) => {
     .then((res) => res.json())
     .then((json) => {
       // console.log(json.results);
+      return json.results;
+    });
+};
+
+export const getTvSeason = (tvid, sid) => {
+  console.log(tvid)
+  console.log(sid)
+  return fetch(
+    `https://api.themoviedb.org/3/tv/${tvid}/season/${sid}?api_key=${process.env.REACT_APP_TMDB_KEY}`
+  )
+    .then((res) => res.json())
+    .then((json) => {
+      console.log(json.results);
       return json.results;
     });
 };

@@ -1,14 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TvPageTemplate from "../components/templateTvListPage";
 import { TvContext } from "../contexts/tvContext";
 import { useQueries } from "react-query";
 import { getTv } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
 import RemoveFromFavoriteTv from "../components/cardIcons/removeFromFavoriteTv";
-import WriteReviewTv from "../components/cardIcons/writeReviewTv"
+import WriteReviewTv from "../components/cardIcons/writeReviewTv";
+import SiteHeaderTv from "../components/siteHeaderTv";
+import { useNavigate } from "react-router-dom";
+
 
 const TvFavoritePage = () => {
   const {favorites: tvIds } = useContext(TvContext);
+  const [user, setUser] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("user");
+    if (loggedIn) {
+      const foundUser = JSON.parse(loggedIn);
+      setUser(foundUser);
+    }
+    else navigate("/login");
+  }, []);
 
   // Create an array of queries and run in parallel.
   const favoriteTvQueries = useQueries(
@@ -33,6 +47,8 @@ const TvFavoritePage = () => {
 
 
   return (
+    <>
+    <SiteHeaderTv/>
     <TvPageTemplate
       name="Favorite TV"
       tv={tv}
@@ -45,6 +61,7 @@ const TvFavoritePage = () => {
         );
       }}
     />
+    </>
   );
 };
 
