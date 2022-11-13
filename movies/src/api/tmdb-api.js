@@ -92,6 +92,7 @@ export const getUpcoming = ( page ) => {
   });
 };
 
+
 export const getTopTv = ( page ) => {
   return fetch(
     `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
@@ -202,7 +203,20 @@ export const getTvSeason = (tvid, sid) => {
   )
     .then((res) => res.json())
     .then((json) => {
-      console.log(json.results);
+      console.log(json);
+      return json;
+    });
+};
+
+
+export const searchCompany = (query) => {
+
+  return fetch(
+    `https://api.themoviedb.org/3/search/company?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${query}`
+  )
+    .then((res) => res.json())
+    .then((json) => {
+      console.log(json.results)
       return json.results;
     });
 };
