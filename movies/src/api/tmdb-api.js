@@ -215,9 +215,9 @@ export const getTvSeason = (args) => {
 
 export const searchCompany = (args) => {
   const [, idPart] = args.queryKey;
-  const { query } = idPart;
+  const { query, page } = idPart;
   return fetch(
-    `https://api.themoviedb.org/3/search/company?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${query}`
+    `https://api.themoviedb.org/3/search/company?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${query}&page=${page}`
   ).then( (response) => {
     if (!response.ok) {
       throw new Error(response.json().message);
@@ -232,9 +232,9 @@ export const searchCompany = (args) => {
 
 export const searchPerson = (args) => {
   const [, idPart] = args.queryKey;
-  const { query } = idPart;
+  const { query, page } = idPart;
   return fetch(
-    `https://api.themoviedb.org/3/search/person?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${query}`
+    `https://api.themoviedb.org/3/search/person?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${query}&page=${page}`
   ).then( (response) => {
     if (!response.ok) {
       throw new Error(response.json().message);
@@ -247,20 +247,3 @@ export const searchPerson = (args) => {
  });
 };
 
-export const searchForm = (args) => {
-  const [, idPart] = args.queryKey;
-  const { type, query } = idPart;
-  return fetch(
-    `https://api.themoviedb.org/3/search/${type}?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${query}`
-  ).then( (response) => {
-    if (!response.ok) {
-      throw new Error(response.json().message);
-    }
-    console.log(response.json())
-    return response.json();
-
-  })
-  .catch((error) => {
-    throw error
- });
-};
