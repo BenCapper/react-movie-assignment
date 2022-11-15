@@ -195,28 +195,72 @@ export const getTvReviews = (id) => {
     });
 };
 
-export const getTvSeason = (tvid, sid) => {
-  console.log(tvid)
-  console.log(sid)
+
+export const getTvSeason = (args) => {
+  const [, idPart] = args.queryKey;
+  const { id, sid } = idPart;
   return fetch(
-    `https://api.themoviedb.org/3/tv/${tvid}/season/${sid}?api_key=${process.env.REACT_APP_TMDB_KEY}`
-  )
-    .then((res) => res.json())
-    .then((json) => {
-      console.log(json);
-      return json;
-    });
+    `https://api.themoviedb.org/3/tv/${id}/season/${sid}?api_key=${process.env.REACT_APP_TMDB_KEY}`
+  ).then( (response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+
+  })
+  .catch((error) => {
+    throw error
+ });
 };
 
-
-export const searchCompany = (query) => {
-
+export const searchCompany = (args) => {
+  const [, idPart] = args.queryKey;
+  const { query } = idPart;
   return fetch(
     `https://api.themoviedb.org/3/search/company?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${query}`
-  )
-    .then((res) => res.json())
-    .then((json) => {
-      console.log(json.results)
-      return json.results;
-    });
+  ).then( (response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+
+  })
+  .catch((error) => {
+    throw error
+ });
+};
+
+export const searchPerson = (args) => {
+  const [, idPart] = args.queryKey;
+  const { query } = idPart;
+  return fetch(
+    `https://api.themoviedb.org/3/search/person?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${query}`
+  ).then( (response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+
+  })
+  .catch((error) => {
+    throw error
+ });
+};
+
+export const searchForm = (args) => {
+  const [, idPart] = args.queryKey;
+  const { type, query } = idPart;
+  return fetch(
+    `https://api.themoviedb.org/3/search/${type}?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${query}`
+  ).then( (response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    console.log(response.json())
+    return response.json();
+
+  })
+  .catch((error) => {
+    throw error
+ });
 };

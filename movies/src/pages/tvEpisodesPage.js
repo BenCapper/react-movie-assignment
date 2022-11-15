@@ -15,26 +15,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Link } from "react-router-dom";
 import { Paper } from "@mui/material";
+import Spinner from '../components/spinner';
+import { excerptShort } from "../util";
 
 const TvEpisodesPage = (props) => {
   let location = useLocation();
   const {tv, season} = location.state;
   const [user, setUser] = useState({});
-
-  const {
-    isLoading,
-    isError,
-    error,
-    data,
-  } = useQuery({
-    queryKey: ['episodes'],
-    queryFn: () => getTvSeason(tv.id, season.season_number),
-    keepPreviousData : true
-  })
-
-  console.log(data)
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const loggedIn = localStorage.getItem("user");
@@ -45,6 +33,24 @@ const TvEpisodesPage = (props) => {
     else navigate("/login");
   }, []);
 
+  const { data, error, isLoading, isError } = useQuery(
+    ["episodes", {id: tv.id, sid: season.season_number}],
+    getTvSeason
+  );
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError){
+    return <h1>{error.message}</h1>;
+  }
+
+  console.log(data.episodes)
+  
+
+
+
   return (
     <>
     <SiteHeaderTv/>
@@ -54,30 +60,22 @@ const TvEpisodesPage = (props) => {
       <Table sx={{minWidth: 550}} aria-label="reviews table">
         <TableHead>
           <TableRow>
-            <TableCell>Season</TableCell>
-            <TableCell align="center">Episode</TableCell>
-            <TableCell align="right">Overview</TableCell>
+            <TableCell>Episode</TableCell>
+            <TableCell align="center">Overview</TableCell>
+            <TableCell align="right">Air Date</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {tv.seasons.map((s) => (
-            <TableRow key={s.season_number}>
+          {data.episodes.map((e) => (
+            <TableRow key={e.episode_number}>
               <TableCell component="th" scope="row">
-                {s.season_number}
+                {e.episode_number}
               </TableCell>
               <TableCell align="center" component="th" scope="row">
-                {s.name}
+                {e.overview}
               </TableCell>
               <TableCell align="right" >
-              <Link
-                  to={`/tv/${tv.id}/season/${s.season_number}`}
-                  state={{
-                      season: s,
-                      tv: tv,
-                  }}
-                >
-                 ({s.episode_count}) Episodes
-                </Link>
+                {e.air_date}
               </TableCell>
             </TableRow>
           ))}

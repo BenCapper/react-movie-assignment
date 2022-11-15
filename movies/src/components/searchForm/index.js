@@ -7,7 +7,9 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import MovieList from "../movieList";
 import { searchCompany } from "../../api/tmdb-api";
+import { searchPerson } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
+import Spinner from '../../components/spinner';
 
 
 const styles = {
@@ -44,8 +46,7 @@ const styles = {
   };
 
 const SearchForm = () => {
-    const [alignment, setAlignment] = React.useState('companies');
-    const [companies, setCompanies] = useState("");
+    const [alignment, setAlignment] = React.useState('company');
     
     const [values, setValues] = React.useState({
         name: 'new',
@@ -53,12 +54,19 @@ const SearchForm = () => {
         showPassword: false,
       });
     
-    const { data , error, isLoading, isError } = useQuery(
-      ["search", { query: values.name }],
-      searchCompany(values.name)
+
+
+    const { data:cdata, error:cerror, isLoading:cisLoading, isError:cisError } = useQuery(
+      ["searchCompany", {query: values.name}],
+      searchCompany
     );
 
-    
+    const { data:pdata, error:perror, isLoading:pisLoading, isError:pisError } = useQuery(
+      ["searchPerson", {query: values.name}],
+      searchPerson
+    );
+
+  
     const handleToggleChange = (event, newAlignment) => {
         console.log(newAlignment)
         setAlignment(newAlignment);
@@ -68,18 +76,33 @@ const SearchForm = () => {
       setValues({ ...values, [prop]: event.target.value });
     };
 
-    const search = () => {
-        if (alignment === "people") {
-
-        }
-        if (alignment === "companies") {
-            
-            setCompanies(data)
-            console.log(data)
-        }
+    if (cisLoading) {
+      return <Spinner />;
+    }
+  
+    if (cisError){
+      return <h1>{cerror.message}</h1>;
     }
 
+    if (pisLoading) {
+      return <Spinner />;
+    }
+  
+    if (pisError){
+      return <h1>{perror.message}</h1>;
+    }
 
+  
+    
+    const search = () => {
+      if (alignment === "person") {
+        console.log(pdata.results)
+
+      }
+      if (alignment === "company") {  
+        console.log(cdata.results)
+      }
+  }
 
     return (
         <>
@@ -95,8 +118,8 @@ const SearchForm = () => {
             onChange={handleToggleChange}
             aria-label="Platform"
         >
-            <ToggleButton value="companies">Companies</ToggleButton>
-            <ToggleButton value="people">People</ToggleButton>
+            <ToggleButton value="company">Companies</ToggleButton>
+            <ToggleButton value="person">People</ToggleButton>
         </ToggleButtonGroup>
 
         <FormControl sx={{mt: 2, width: '25ch'}} variant="outlined">
