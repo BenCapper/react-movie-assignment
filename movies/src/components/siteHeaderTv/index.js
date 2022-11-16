@@ -46,6 +46,7 @@ const SiteHeaderTv = ({ history }) => {
   const menuOptions = [
     { label: "Discover Tv", path: "/tv" },
     { label: "Top Rated TV", path: "/tv/top" },
+    { label: "Trending TV", path: "/tv/trending" },
     { label: "Favorite TV", path: "/tv/favorites" },
     { label: "Must Watch", path: "/tv/mustwatch" },
     { label: "Movies", path: "/movies" },
