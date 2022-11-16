@@ -44,11 +44,12 @@ const SiteHeader = ({ history }) => {
 
   const menuOptions = [
     { label: "Home", path: "/movies" },
-    { label: "Search", path: "/search" },
     { label: "Upcoming Movies", path: "/movies/upcoming" },
+    { label: "Trending Movies", path: "/movies/trending" },
     { label: "Favorite Movies", path: "/movies/favorites" },
     { label: "Must Watch", path: "/movies/mustwatch" },
     { label: "Tv", path: "/tv" },
+    { label: "Search", path: "/search" },
     { label: "Log Out", path: "/login"}
   ];
 

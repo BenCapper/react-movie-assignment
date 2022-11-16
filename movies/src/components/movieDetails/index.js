@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import Drawer from "@mui/material/Drawer";
+import { useQuery } from "react-query";
 import MovieReviews from "../movieReviews"
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
@@ -9,6 +10,13 @@ import StarRate from "@mui/icons-material/StarRate";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
+import { getCompany, getSimilarMovies } from "../../api/tmdb-api";
+import Spinner from '../../components/spinner';
+import MovieListPageTemplate from "../templateMovieListPage";
+import MovieList from "../movieList";
+import PlaylistAddIcon from "../cardIcons/addToMustWatch"
+import { Grid } from "@mui/material";
+import Header from "../headerMovieList";
 
 
 const root = {
@@ -23,10 +31,49 @@ const chip = { margin: 0.5 };
 
 const MovieDetails = ({ movie }) => { 
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [companyId, setCompanyId] = useState(movie.production_companies[0].id)
+
+
   
-  const chipHandler = ( homepage ) => {
-      console.log(homepage)
+
+  const { data:sdata, error:serror, isLoading:sisLoading, isError:sisError } = useQuery(
+    ["similar", {id: movie.id}],
+    getSimilarMovies
+  );
+
+
+  const { data, error, isLoading, isError } = useQuery(
+    ["company", {id: companyId}],
+    getCompany
+  );
+
+  if (sisLoading) {
+    return <Spinner />;
   }
+
+  if (sisError){
+    return <h1>{serror.message}</h1>;
+  }
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError){
+    return <h1>{error.message}</h1>;
+  }
+
+  const chipHandler = ( res ) => {
+    setCompanyId(res.id);
+    if (res.id === data.id) chip();
+  }
+
+  const chip = ( ) => {
+    if (data.homepage) window.open(data.homepage, '_blank');
+  }
+
+
+
   return (
     <>
       <Typography variant="h5" component="h3">
@@ -88,6 +135,24 @@ const MovieDetails = ({ movie }) => {
           </li>
         ))}
       </Paper>
+      <Grid container sx={{ padding: '20px' }}>
+      <Grid item xs={12}>
+      <Typography sx={root} variant="h4">
+        Similar Movies
+      </Typography>
+      </Grid>
+      <Grid item container spacing={5}>
+        <MovieList
+          movies={sdata.results}
+          action={(movie) => {
+            return <PlaylistAddIcon movie={movie} />
+          }}
+        />
+      </Grid>
+    </Grid>
+
+
+
       <Fab
         color="secondary"
         variant="extended"

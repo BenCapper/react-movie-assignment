@@ -36,6 +36,7 @@ const TvHomePage = (props) => {
 
   const handleChange = (event, value) => {
     setPageNumber(value);
+    window.scrollTo(0,0)
   }
 
   if (isLoading) {

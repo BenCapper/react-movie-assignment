@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { getUpcoming } from "../api/tmdb-api";
-import PageTemplate from '../components/templateMovieListPage'
+import { getTrendingTv } from "../api/tmdb-api";
+import TvListPageTemplate from '../components/templateTvListPage'
 import Spinner from '../components/spinner';
-import PlaylistAddIcon from '../components/cardIcons/addToMustWatch';
+import PlaylistAddIcon from '../components/cardIcons/addToMustWatchTv';
 import { useQuery } from 'react-query';
 import { Stack } from "@mui/material";
 import { Pagination } from "@mui/material";
-import SiteHeader from "../components/siteHeader";
+import SiteHeaderTv from "../components/siteHeaderTv";
 import { useNavigate } from "react-router-dom";
 
-const UpcomingPage = (props) => {
+const TrendingTvPage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [user, setUser] = useState({});
   const navigate = useNavigate();
@@ -29,8 +29,8 @@ const UpcomingPage = (props) => {
     error,
     data,
   } = useQuery({
-    queryKey: ['upcoming', pageNumber],
-    queryFn: () => getUpcoming(pageNumber),
+    queryKey: ['trendingTv', pageNumber],
+    queryFn: () => getTrendingTv(pageNumber),
     keepPreviousData : true
   })
 
@@ -45,21 +45,21 @@ const UpcomingPage = (props) => {
   if (isError) {
     return <h1>{error.message}</h1>
   }  
-  const movies = data.results;
-  console.log(movies)
+  const tvs = data.results;
+  console.log(tvs)
 
   // Redundant, but necessary to avoid app crashing.
-  const mustWatch = movies.filter(m => m.mustWatch)
+  const mustWatch = tvs.filter(m => m.mustWatch)
   localStorage.setItem('mustWatch', JSON.stringify(mustWatch))
 
   return (
     <>
-    <SiteHeader/>
-    <PageTemplate
-      title="Upcoming Movies"
-      movies={movies}
-      action={(movie) => {
-        return <PlaylistAddIcon movie={movie} />
+    <SiteHeaderTv/>
+    <TvListPageTemplate
+      name="Trending TV"
+      tv={tvs}
+      action={(tv) => {
+        return <PlaylistAddIcon tv={tv} />
       }}
     />
     <Stack alignItems="center">
@@ -68,4 +68,4 @@ const UpcomingPage = (props) => {
     </>
 );
 };
-export default UpcomingPage;
+export default TrendingTvPage;
