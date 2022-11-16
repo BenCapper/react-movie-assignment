@@ -20,7 +20,7 @@ const TvDetailsPage = (props) => {
       setUser(foundUser);
     }
     else navigate("/login");
-  }, []);
+  }, [navigate]);
 
   const { data: tv, error, isLoading, isError } = useQuery(
     ["tv", { id: id }],

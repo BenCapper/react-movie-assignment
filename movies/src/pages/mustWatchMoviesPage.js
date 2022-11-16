@@ -1,15 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
+import { useNavigate } from "react-router-dom";
 import Spinner from '../components/spinner';
 import SiteHeader from "../components/siteHeader";
 
 
 const MustWatchPage = () => {
   const {mustWatch: mwIds } = useContext(MoviesContext);
+  const [user, setUser] = useState({});
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("user");
+    if (loggedIn) {
+      const foundUser = JSON.parse(loggedIn);
+      setUser(foundUser);
+    }
+    else navigate("/login");
+  }, [navigate]);
 
   const mustWatchMovieQueries = useQueries(
     mwIds.map((movId) => {

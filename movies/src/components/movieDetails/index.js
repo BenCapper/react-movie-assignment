@@ -12,11 +12,9 @@ import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import { getCompany, getSimilarMovies } from "../../api/tmdb-api";
 import Spinner from '../../components/spinner';
-import MovieListPageTemplate from "../templateMovieListPage";
 import MovieList from "../movieList";
 import PlaylistAddIcon from "../cardIcons/addToMustWatch"
 import { Grid } from "@mui/material";
-import Header from "../headerMovieList";
 
 
 const root = {
@@ -27,7 +25,6 @@ const root = {
     padding: 1.5,
     margin: 0,
 };
-const chip = { margin: 0.5 };
 
 const MovieDetails = ({ movie }) => { 
   const [drawerOpen, setDrawerOpen] = useState(false);

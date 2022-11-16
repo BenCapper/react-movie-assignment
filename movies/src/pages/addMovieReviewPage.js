@@ -26,7 +26,7 @@ const WriteReviewPage = (props) => {
       setUser(foundUser);
     }
     else navigate("/login");
-  }, []);
+  }, [navigate]);
 
   if (isLoading) {
     return <Spinner />;

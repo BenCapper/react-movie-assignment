@@ -24,7 +24,7 @@ const MoviePage = (props) => {
       setUser(foundUser);
     }
     else navigate("/login");
-  }, []);
+  }, [navigate]);
 
   if (isLoading) {
     return <Spinner />;

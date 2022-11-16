@@ -22,7 +22,7 @@ const FavoriteMoviesPage = () => {
       setUser(foundUser);
     }
     else navigate("/login");
-  }, []);
+  }, [navigate]);
 
   // Create an array of queries and run in parallel.
   const favoriteMovieQueries = useQueries(

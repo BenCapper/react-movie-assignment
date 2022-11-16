@@ -2,21 +2,17 @@ import React, {useEffect, useState} from "react";
 import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import TvPageTemplate from "../components/templateTvPage";
-import TvReview from "../components/tvReview";
 import SiteHeaderTv from "../components/siteHeaderTv";
 import { useNavigate } from "react-router-dom";
 import { getTvSeason } from "../api/tmdb-api";
-import Typography from "@mui/material/Typography";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Link } from "react-router-dom";
 import { Paper } from "@mui/material";
 import Spinner from '../components/spinner';
-import { excerptShort } from "../util";
 
 const TvEpisodesPage = (props) => {
   let location = useLocation();
@@ -31,7 +27,7 @@ const TvEpisodesPage = (props) => {
       setUser(foundUser);
     }
     else navigate("/login");
-  }, []);
+  }, [navigate]);
 
   const { data, error, isLoading, isError } = useQuery(
     ["episodes", {id: tv.id, sid: season.season_number}],
