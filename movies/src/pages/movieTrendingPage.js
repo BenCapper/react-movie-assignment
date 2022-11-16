@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getUpcoming } from "../api/tmdb-api";
+import { getTrendingMovies, getUpcoming } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage'
 import Spinner from '../components/spinner';
 import PlaylistAddIcon from '../components/cardIcons/addToMustWatch';
@@ -9,7 +9,7 @@ import { Pagination } from "@mui/material";
 import SiteHeader from "../components/siteHeader";
 import { useNavigate } from "react-router-dom";
 
-const UpcomingPage = (props) => {
+const TrendingPage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [user, setUser] = useState({});
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const UpcomingPage = (props) => {
     data,
   } = useQuery({
     queryKey: ['upcoming', pageNumber],
-    queryFn: () => getUpcoming(pageNumber),
+    queryFn: () => getTrendingMovies(pageNumber),
     keepPreviousData : true
   })
 
@@ -56,7 +56,7 @@ const UpcomingPage = (props) => {
     <>
     <SiteHeader/>
     <PageTemplate
-      title="Upcoming Movies"
+      title="Trending Movies"
       movies={movies}
       action={(movie) => {
         return <PlaylistAddIcon movie={movie} />
@@ -68,4 +68,4 @@ const UpcomingPage = (props) => {
     </>
 );
 };
-export default UpcomingPage;
+export default TrendingPage;
