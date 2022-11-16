@@ -52,9 +52,7 @@ const SearchForm = () => {
     const [query1, setQuery1] = useState('-')
     const [query2, setQuery2] = useState('-')
     const [values, setValues] = React.useState({
-        name: '',
-        password: '',
-        showPassword: false,
+        name: ''
       });
     
 

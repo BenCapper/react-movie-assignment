@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import Drawer from "@mui/material/Drawer";
+import { useQuery } from "react-query";
 import MovieReviews from "../movieReviews"
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
@@ -9,6 +10,8 @@ import StarRate from "@mui/icons-material/StarRate";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
+import { getCompany } from "../../api/tmdb-api";
+import Spinner from '../../components/spinner';
 
 
 const root = {
@@ -23,10 +26,33 @@ const chip = { margin: 0.5 };
 
 const MovieDetails = ({ movie }) => { 
   const [drawerOpen, setDrawerOpen] = useState(false);
-  
-  const chipHandler = ( homepage ) => {
-      console.log(homepage)
+  const [companyId, setCompanyId] = useState(movie.production_companies[0].id)
+
+
+  const { data, error, isLoading, isError } = useQuery(
+    ["company", {id: companyId}],
+    getCompany
+  );
+
+  if (isLoading) {
+    return <Spinner />;
   }
+
+  if (isError){
+    return <h1>{error.message}</h1>;
+  }
+
+  const chipHandler = ( res ) => {
+    setCompanyId(res.id);
+    if (res.id === data.id) chip();
+  }
+
+  const chip = ( ) => {
+    if (data.homepage) window.open(data.homepage, '_blank');
+  }
+
+
+
   return (
     <>
       <Typography variant="h5" component="h3">
