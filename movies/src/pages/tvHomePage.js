@@ -21,7 +21,7 @@ const TvHomePage = (props) => {
       setUser(foundUser);
     }
     else navigate("/login");
-  }, []);
+  }, [navigate]);
 
   const {
     isLoading,

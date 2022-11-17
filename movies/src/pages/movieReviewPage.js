@@ -18,7 +18,7 @@ const MovieReviewPage = (props) => {
       setUser(foundUser);
     }
     else navigate("/login");
-  }, []);
+  }, [navigate]);
 
 
   return (

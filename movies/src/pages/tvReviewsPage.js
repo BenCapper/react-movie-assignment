@@ -18,7 +18,7 @@ const TvReviewPage = (props) => {
       setUser(foundUser);
     }
     else navigate("/login");
-  }, []);
+  }, [navigate]);
 
   return (
     <>
